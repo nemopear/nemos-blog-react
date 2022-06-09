@@ -1,15 +1,25 @@
-import React from "react";
-import { AppProps } from "next/app";
-import "tailwindcss/tailwind.css";
-import "@styles/global.scss";
-import { Provider } from "react-redux";
+import { MantineProvider } from "@mantine/core";
 import store from "@redux/store";
-import { appWithTranslation } from "@i18n";
+import "@styles/global.scss";
+import "@styles/tailwind.scss";
+import { AppProps } from "next/app";
+import React from "react";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <MantineProvider
+        theme={{
+          // Override any other properties from default theme
+          fontFamily: "urbane-rounded, thongterm, sans-serif",
+          spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+        }}
+        withGlobalStyles
+        withNormalizeCSS
+      >
+        <Component {...pageProps} />
+      </MantineProvider>
     </Provider>
   );
 }

@@ -1,6 +1,6 @@
 # nemos-blogs
 
-Create personal blogs by using React.js, Next.js and Headless CMS
+Create personal blogs by using React.js, Next.js, Mantine, and Headless CMS
 This project was generated with [superplate](https://github.com/pankod/superplate).
 
 ## Getting Started
@@ -67,9 +67,10 @@ Fast, easy and reliable testing for anything that runs in a browser.
 
 [Go To Documentation](https://docs.cypress.io/guides/overview/why-cypress.html)
 
-### **yes**
+### **Mantine**
 
-[Go To Documentation]()
+React components library with native dark theme support
+[Go To Documentation](https://mantine.dev/)
 
 ## License
 
