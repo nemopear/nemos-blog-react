@@ -1,6 +1,6 @@
-# nemos-blogs
+# nemos-blog
 
-Create personal blogs by using React.js, Next.js, Mantine, and Headless CMS
+Create personal blog by using React.js, Next.js, Mantine, and Headless CMS
 This project was generated with [superplate](https://github.com/pankod/superplate).
 
 ## Getting Started

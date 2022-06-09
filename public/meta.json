@@ -1,5 +1,5 @@
 {
-  "name": "nemos-blogs",
+  "name": "nemos-blog",
   "plugins": [
     {
       "name": "TailwindCSS",

@@ -20,11 +20,12 @@ class CustomDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link rel="shortcut icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
             href="https://use.typekit.net/kpb8sca.css"
           ></link>
-          <title>Nemo's Blogs</title>
+          <title>Nemo's Blog 🪐</title>
         </Head>
         <body>
           <Main />
