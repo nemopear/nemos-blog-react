@@ -9,7 +9,7 @@ import "@styles/tailwind.scss";
 import { getCookie, setCookies } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
 import { AppProps } from "next/app";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
 function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
@@ -17,6 +17,15 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>(
     props.colorScheme
   );
+
+  const [showChild, setShowChild] = useState(false);
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
+
+  if (!showChild) {
+    return null;
+  }
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
