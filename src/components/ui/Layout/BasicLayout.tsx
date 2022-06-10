@@ -1,10 +1,9 @@
 import { Container } from "@mantine/core";
-import { ReactNode } from "react";
 import { Footer } from "./footer";
-import { Header } from "./Header";
+import { Header } from "./header";
 
 type BasicLayoutProps = {
-  children: ReactNode;
+  children?: React.ReactNode;
 };
 
 export const BasicLayout: React.FC<BasicLayoutProps> = ({ children }) => {
