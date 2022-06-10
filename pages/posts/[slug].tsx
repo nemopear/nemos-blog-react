@@ -9,16 +9,16 @@ const singlePost: React.FC = ({ post }) => {
   return (
     <>
       <Head>
-        <title>{post.title}</title>
+        <title>Nemo's Blog | {post.title}</title>
       </Head>
       <BasicLayout>
-        <div className="lg:max-w-xl xl:max-w-2xl mt-20">
+        <div className="lg:max-w-xl xl:max-w-2xl mt-10 lg:mt-20">
           <h1 className="text-4xl font-medium mb-4">{post.title}</h1>
           <div className="create-at text-sm text-gray-500 my-4">
             {moment(post.createdAt).format("MMM Do, YYYY")}
           </div>
           <div
-            className="content prose lg:prose-base my-16"
+            className="content prose lg:prose-base my-8 lg:my-16"
             dangerouslySetInnerHTML={{ __html: post.content.html }}
           >
             {/* {post.content.html} */}

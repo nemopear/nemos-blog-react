@@ -1,3 +1,4 @@
+import BadgeCategory from "@components/ui/BadgeCategory";
 import { Badge } from "@mantine/core";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -30,23 +31,16 @@ export const Main: React.FC = () => {
           </h1>
           <p className="text-lg mb-8">เรียนรู้ และบันทึกไว้ 📒✏️</p>
           <div className="inline-block mx-auto">
-            <ul className="flex items-center justify-between lg:justify-start space-x-4">
+            <ul className="flex flex-wrap items-center justify-center">
               {/* {console.log("categoryLinks : ", categoryLinks)} */}
               {categoryLinks.map((link) => (
-                <li key={link.name}>
-                  <Link href={`/${link.name}`}>
+                <li key={link.name} className="m-1">
+                  <Link href={`/categories/${link.name}`}>
                     <a>
-                      <Badge
-                        className="cursor-pointer text-white capitalize text-sm font-medium py-3"
-                        sx={{
-                          backgroundColor: `${link.color.css}`,
-                          "&:hover": {
-                            opacity: ".8",
-                          },
-                        }}
-                      >
-                        {link.name}
-                      </Badge>
+                      <BadgeCategory
+                        bgColor={link.color.css}
+                        label={link.name}
+                      />
                     </a>
                   </Link>
                 </li>
