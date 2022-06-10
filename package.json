@@ -25,6 +25,7 @@
     "@mantine/spotlight": "^4.2.8",
     "@reduxjs/toolkit": "^1.6.0",
     "dayjs": "^1.11.3",
+    "giscus": "^1.0.5",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
     "moment": "^2.29.3",

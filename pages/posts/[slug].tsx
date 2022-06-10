@@ -1,4 +1,5 @@
 import { BasicLayout } from "@components/ui/Layout";
+import Giscus from "@giscus/react";
 import moment from "moment";
 import { graphCms } from "src/lib/graphCms";
 
@@ -17,6 +18,18 @@ const singlePost: React.FC = ({ post }) => {
         >
           {/* {post.content.html} */}
         </div>
+        <Giscus
+          id="comments"
+          repo="nemopear/nemos-blogs-react"
+          repoId="501195307"
+          mapping="specific"
+          term="Welcome to Nemo's Blog"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme="light"
+          lang="en"
+        />
       </div>
     </BasicLayout>
   );
