@@ -2,11 +2,10 @@ import { MantineProvider } from "@mantine/core";
 import store from "@redux/store";
 import "@styles/global.scss";
 import "@styles/tailwind.scss";
-import { AppProps } from "next/app";
 import React from "react";
 import { Provider } from "react-redux";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+function MyApp({ Component, pageProps }) {
   return (
     <>
       <Provider store={store}>
@@ -35,6 +34,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </Provider>
     </>
   );
-};
+}
 
 export default MyApp;

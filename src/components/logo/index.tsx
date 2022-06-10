@@ -10,7 +10,7 @@ export const Logo: React.FC<LogoProps> = ({ textClasses, hasImage }) => {
   return (
     <>
       <Link href="/">
-        <a href="#" className="flex items-center">
+        <a href="/" className="flex items-center">
           {hasImage && (
             <span className="inline-block h-10 w-10 relative rounded-full overflow-hidden mr-2">
               <Image

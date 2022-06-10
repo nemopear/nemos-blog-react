@@ -1,37 +1,45 @@
 import { BasicLayout } from "@components/ui/Layout";
 import Giscus from "@giscus/react";
 import moment from "moment";
+import Head from "next/head";
 import { graphCms } from "src/lib/graphCms";
 
 const singlePost: React.FC = ({ post }) => {
   // const { title, createdAt, content } = post;
   return (
-    <BasicLayout>
-      <div className="lg:max-w-xl xl:max-w-2xl mt-20">
-        <h1 className="text-4xl font-medium mb-4">{post.title}</h1>
-        <div className="create-at text-sm text-gray-500 my-4">
-          {moment(post.createdAt).format("MMM Do, YYYY")}
+    <>
+      <Head>
+        <title>{post.title}</title>
+      </Head>
+      <BasicLayout>
+        <div className="lg:max-w-xl xl:max-w-2xl mt-20">
+          <h1 className="text-4xl font-medium mb-4">{post.title}</h1>
+          <div className="create-at text-sm text-gray-500 my-4">
+            {moment(post.createdAt).format("MMM Do, YYYY")}
+          </div>
+          <div
+            className="content prose lg:prose-base my-16"
+            dangerouslySetInnerHTML={{ __html: post.content.html }}
+          >
+            {/* {post.content.html} */}
+          </div>
+          <Giscus
+            id="comments"
+            repo="nemopear/nemos-blogs-react"
+            repoId="R_kgDOHd-iKw"
+            category="General"
+            categoryId="DIC_kwDOHd-iK84CPk7v"
+            mapping="title"
+            term="Welcome to Nemo's Blog !"
+            reactionsEnabled="1"
+            emitMetadata="0"
+            inputPosition="top"
+            theme="light"
+            lang="en"
+          />
         </div>
-        <div
-          className="content prose lg:prose-base leading-7 prose-red-h2 my-16"
-          dangerouslySetInnerHTML={{ __html: post.content.html }}
-        >
-          {/* {post.content.html} */}
-        </div>
-        <Giscus
-          id="comments"
-          repo="nemopear/nemos-blogs-react"
-          repoId="501195307"
-          mapping="specific"
-          term="Welcome to Nemo's Blog"
-          reactionsEnabled="1"
-          emitMetadata="0"
-          inputPosition="top"
-          theme="light"
-          lang="en"
-        />
-      </div>
-    </BasicLayout>
+      </BasicLayout>
+    </>
   );
 };
 

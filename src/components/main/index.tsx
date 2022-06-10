@@ -31,7 +31,7 @@ export const Main: React.FC = () => {
           <p className="text-lg mb-8">เรียนรู้ และบันทึกไว้ 📒✏️</p>
           <div className="inline-block mx-auto">
             <ul className="flex items-center justify-between lg:justify-start space-x-4">
-              {console.log("categoryLinks : ", categoryLinks)}
+              {/* {console.log("categoryLinks : ", categoryLinks)} */}
               {categoryLinks.map((link) => (
                 <li key={link.name}>
                   <Link href={`/${link.name}`}>
