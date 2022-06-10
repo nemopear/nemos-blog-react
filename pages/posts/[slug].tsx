@@ -25,7 +25,7 @@ const singlePost: React.FC = ({ post }) => {
           </div>
           <Giscus
             id="comments"
-            repo="nemopear/nemos-blogs-react"
+            repo="nemopear/nemos-blog-react"
             repoId="R_kgDOHd-iKw"
             category="General"
             categoryId="DIC_kwDOHd-iK84CPk7v"
