@@ -2,7 +2,7 @@ const withPlugins = require("next-compose-plugins");
 
 module.exports = withPlugins([], {
   reactStrictMode: true,
-   images: {
+  images: {
     domains: ["media.graphcms.com"]
   },
     typescript: {

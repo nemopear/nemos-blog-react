@@ -25,6 +25,7 @@
     "@mantine/rte": "^4.2.8",
     "@mantine/spotlight": "^4.2.8",
     "@reduxjs/toolkit": "^1.6.0",
+    "cookies-next": "^2.0.4",
     "dayjs": "^1.11.3",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
