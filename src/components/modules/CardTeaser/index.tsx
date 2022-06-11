@@ -3,14 +3,20 @@ import { Badge } from "@mantine/core";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
+import { BsFillStarFill } from "react-icons/bs";
 
 const CardTeaser = ({ post }) => {
-  console.log(post);
+  // console.log("card:", post);
 
   // const { title, thumbnail, slug, categories } = post;
   return (
     <Link href={`/posts/${post.slug}`}>
-      <a>
+      <a className="relative">
+        {/* {post.pin && (
+          <div className="absolute right-5 top-2.5 text-xl text-yellow-300">
+            <BsFillStarFill />
+          </div>
+        )} */}
         <div
           key={post.title}
           className="col-span-1 rounded-md border border-gray-300 p-5 prose prose-base"

@@ -4,7 +4,7 @@ type BadgeCategoryProps = {
   label: string;
 };
 const BadgeCategory = ({ bgColor, label }: BadgeCategoryProps) => {
-  console.log(bgColor, label);
+  // console.log(bgColor, label);
 
   return (
     <Badge
