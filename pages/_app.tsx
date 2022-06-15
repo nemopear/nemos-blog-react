@@ -52,11 +52,10 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
             defaultProps={{
               Container: {
                 sizes: {
-                  xs: 540,
-                  sm: 720,
-                  md: 960,
-                  lg: 1140,
-                  xl: 1320,
+                  sm: 576,
+                  md: 768,
+                  lg: 992,
+                  xl: 1200,
                 },
               },
             }}

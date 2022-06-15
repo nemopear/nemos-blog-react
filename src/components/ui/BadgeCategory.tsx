@@ -1,14 +1,12 @@
-import { Badge, BadgeProps } from "@mantine/core";
+import { Badge } from "@mantine/core";
 type BadgeCategoryProps = {
   bgColor: string;
   label: string;
 };
 const BadgeCategory = ({ bgColor, label }: BadgeCategoryProps) => {
-  // console.log(bgColor, label);
-
   return (
     <Badge
-      className="cursor-pointer text-white capitalize text-sm font-medium py-3"
+      className="cursor-pointer py-3 text-sm font-medium capitalize text-white"
       sx={{
         backgroundColor: `${bgColor}`,
         color: "#fff",

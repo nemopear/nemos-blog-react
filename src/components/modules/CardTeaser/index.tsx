@@ -1,17 +1,13 @@
 import BadgeCategory from "@components/ui/BadgeCategory";
-import { Badge } from "@mantine/core";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
-import { BsFillStarFill } from "react-icons/bs";
 
 const CardTeaser = ({ post }) => {
-  // console.log("card:", post);
-
   // const { title, thumbnail, slug, categories } = post;
   return (
     <Link href={`/posts/${post.slug}`}>
-      <a className="relative">
+      <a className="relative h-full">
         {/* {post.pin && (
           <div className="absolute right-5 top-2.5 text-xl text-yellow-300">
             <BsFillStarFill />
@@ -19,11 +15,11 @@ const CardTeaser = ({ post }) => {
         )} */}
         <div
           key={post.title}
-          className="col-span-1 rounded-md border border-gray-300 p-5 prose prose-base"
+          className="prose prose-base col-span-1 h-full rounded-md border border-gray-300 p-5"
         >
-          <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-          <p className="">{post.excerpt}</p>
-          <div className="flex justify-between items-center mt-1">
+          <h2 className="mb-2 text-xl font-semibold">{post.title}</h2>
+          <p className="line-clamp-5">{post.excerpt}</p>
+          <div className="mt-1 flex items-center justify-between">
             <small className="create-at text-sm text-gray-500">
               {moment(post.createdAt).format("MMM Do, YYYY")}
             </small>

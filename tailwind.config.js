@@ -12,13 +12,26 @@ module.exports = {
               fontSize: '20px !important',
               fontWeight: 500
             },
+            ".text-xs": {fontSize: '12px'}
           },
         },
       },
+      lineClamp: {
+        7: '7',
+        8: '8',
+        9: '9',
+        10: '10',
+      }
+    },
+    screens: {
+      sm: "768px",
+      md: "992px",
+      lg: "1200px",
+      xl: "1600px",
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography'),],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'),],
 };
