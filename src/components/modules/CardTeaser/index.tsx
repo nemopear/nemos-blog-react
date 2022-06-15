@@ -18,7 +18,7 @@ const CardTeaser = ({ post }) => {
           className="prose prose-base col-span-1 h-full rounded-md border border-gray-300 p-5"
         >
           <h2 className="mb-2 text-xl font-semibold">{post.title}</h2>
-          <p className="line-clamp-5">{post.excerpt}</p>
+          <p className="line-clamp-none sm:line-clamp-5">{post.excerpt}</p>
           <div className="mt-1 flex items-center justify-between">
             <small className="create-at text-sm text-gray-500">
               {moment(post.createdAt).format("MMM Do, YYYY")}
@@ -27,6 +27,7 @@ const CardTeaser = ({ post }) => {
             <BadgeCategory
               label={post.categories[0].name}
               bgColor={post.categories[0].color.css}
+              className="!text-xs"
             />
           </div>
           {/* <div

@@ -16,7 +16,7 @@ const Home: React.FC = ({ posts, pages }) => {
       <BasicLayout>
         <Main />
         <div className="container mx-auto max-w-screen-lg flex-1 p-5 lg:my-8">
-          <div className="grid auto-rows-[1fr] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:auto-rows-[1fr] md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
               <CardTeaser key={post.slug} post={post} />
             ))}
@@ -56,7 +56,7 @@ export async function getStaticProps() {
   // }
   const { posts } = await graphCms.request(`
         {
-            posts(orderBy: pin_DESC, where: {pin_not: null}) {
+            posts(orderBy: createdAt_DESC) {
               createdAt
               excerpt 
               title
