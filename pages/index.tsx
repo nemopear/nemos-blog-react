@@ -2,17 +2,76 @@ import { Main } from "@components/main";
 import CardTeaser from "@components/modules/CardTeaser";
 import { BasicLayout } from "@components/ui/Layout";
 import { Divider, Grid } from "@mantine/core";
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 import Image from "next/image";
 import React from "react";
+import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
 const Home: React.FC = ({ posts, pages }) => {
   return (
     <>
-      <Head>
-        <title>Nemo's Blog</title>
-      </Head>
+      <NextSeo
+        title={CONFIG.defaultTitle}
+        description={CONFIG.defaultDescription}
+        openGraph={{
+          url: `${CONFIG.url}`,
+          title: `${CONFIG.defaultTitle}`,
+          description: `${CONFIG.defaultDescription}`,
+          images: [
+            {
+              url: "https://media.graphassets.com/output=format:jpg/resize=width:350,height:350,fit:crop/FWUnmkz9Ruqwt34qsNZ7",
+              width: 400,
+              height: 400,
+              alt: `${CONFIG.defaultTitle}`,
+              type: "image/jpeg",
+            },
+          ],
+          site_name: `${CONFIG.defaultTitle}`,
+        }}
+        additionalMetaTags={[
+          {
+            name: "image",
+            content: `${pages.thumbnail && pages.thumbnail.url}`,
+          },
+          {
+            property: "og:title",
+            content: `${CONFIG.defaultTitle}`,
+          },
+          {
+            property: "og:description",
+            content: `${CONFIG.defaultTitle}`,
+          },
+          {
+            property: "og:url",
+            content: `${CONFIG.url}`,
+          },
+          {
+            property: "og:image",
+            content: `${pages.thumbnail && pages.thumbnail.url}`,
+          },
+          {
+            name: "twitter:url",
+            content: `${CONFIG.url}`,
+          },
+          {
+            name: "twitter:title",
+            content: `${CONFIG.defaultTitle}`,
+          },
+          {
+            name: "twitter:description",
+            content: `${CONFIG.defaultTitle}`,
+          },
+          {
+            name: "twitter:image:src",
+            content: `${pages.thumbnail && pages.thumbnail.url}`,
+          },
+          {
+            name: "twitter:image",
+            content: `${pages.thumbnail && pages.thumbnail.url}`,
+          },
+        ]}
+      />
       <BasicLayout>
         <Main />
         <div className="container mx-auto max-w-screen-lg flex-1 sm:p-5 lg:my-8">

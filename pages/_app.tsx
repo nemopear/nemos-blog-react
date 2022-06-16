@@ -77,8 +77,9 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
               openGraph={{
                 type: "website",
                 locale: "en_IE",
-                url: "https://nemo-blog.netlify.app/",
+                url: `${CONFIG.url}`,
                 site_name: `${CONFIG.defaultTitle}`,
+                description: `${CONFIG.defaultDescription}`,
               }}
             />
             <Component {...pageProps} />

@@ -15,7 +15,7 @@ const singlePost: React.FC = ({ post }) => {
         title={CONFIG.defaultTitle}
         description={CONFIG.defaultDescription}
         openGraph={{
-          url: `${CONFIG.url}/posts/${post.slug}`,
+          url: `${CONFIG.url}posts/${post.slug}`,
           title: `${post.title}`,
           description: `${post.excerpt}`,
           images: [
@@ -44,7 +44,7 @@ const singlePost: React.FC = ({ post }) => {
           },
           {
             property: "og:url",
-            content: `${CONFIG.url}/posts/${post.slug}`,
+            content: `${CONFIG.url}posts/${post.slug}`,
           },
           {
             property: "og:image",
@@ -52,7 +52,7 @@ const singlePost: React.FC = ({ post }) => {
           },
           {
             name: "twitter:url",
-            content: `${CONFIG.url}/posts/${post.slug}`,
+            content: `${CONFIG.url}posts/${post.slug}`,
           },
           {
             name: "twitter:title",
@@ -72,6 +72,7 @@ const singlePost: React.FC = ({ post }) => {
           },
         ]}
       />
+
       <BasicLayout>
         <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">
           <h1 className="mb-4 text-4xl font-medium">{post.title}</h1>
