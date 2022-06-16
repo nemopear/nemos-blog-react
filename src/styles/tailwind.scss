@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .btn-transition {
+    @apply duration-100 ease-in;
+  }
+}

@@ -1,24 +1,46 @@
 import { BasicLayout } from "@components/ui/Layout";
 import Giscus from "@giscus/react";
 import moment from "moment";
-import Head from "next/head";
+import { NextSeo } from "next-seo";
+import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
 const singlePost: React.FC = ({ post }) => {
   // const { title, createdAt, content } = post;
   return (
     <>
-      <Head>
-        <title>Nemo's Blog | {post.title}</title>
-      </Head>
+      <NextSeo
+        title={CONFIG.defaultTitle}
+        description={CONFIG.defaultDescription}
+        openGraph={{
+          url: `${post.slug}`,
+          title: `${post.title}`,
+          description: `${post.excerpt}`,
+          images: [
+            {
+              url: "https://www.example.ie/og-image-01.jpg",
+              width: 800,
+              height: 600,
+              alt: "Og Image Alt",
+              type: "image/jpeg",
+            },
+          ],
+          site_name: "SiteName",
+        }}
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+      />
       <BasicLayout>
-        <div className="lg:max-w-xl xl:max-w-2xl mt-10 lg:mt-20">
-          <h1 className="text-4xl font-medium mb-4">{post.title}</h1>
-          <div className="create-at text-sm text-gray-500 my-4">
+        <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">
+          <h1 className="mb-4 text-4xl font-medium">{post.title}</h1>
+          <div className="create-at my-4 text-sm text-gray-500">
             {moment(post.createdAt).format("MMM Do, YYYY")}
           </div>
           <div
-            className="content prose lg:prose-base my-8 lg:my-16"
+            className="content prose my-8 lg:prose-base lg:my-16"
             dangerouslySetInnerHTML={{ __html: post.content.html }}
           >
             {/* {post.content.html} */}
@@ -70,11 +92,14 @@ export async function getStaticProps({ params }) {
         query SinglePost($slug: String!) {
             post(where: {slug: $slug}) {
                 title
+                thumbnail {
+                  url
+                }
                 createdAt
                 content {
                     html
-                    
                 }
+                excerpt
             }
         }      
     `,

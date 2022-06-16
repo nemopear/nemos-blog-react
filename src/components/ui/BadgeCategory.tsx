@@ -7,7 +7,9 @@ type BadgeCategoryProps = {
 const BadgeCategory = ({ bgColor, label, className }: BadgeCategoryProps) => {
   return (
     <Badge
-      className={`cursor-pointer py-3 text-sm font-medium capitalize text-white ${className !== undefined ? className : ''}`}
+      className={`btn-transition cursor-pointer py-3 text-sm font-medium capitalize text-white ${
+        className !== undefined ? className : ""
+      }`}
       sx={{
         backgroundColor: `${bgColor}`,
         color: "#fff",

@@ -12,7 +12,7 @@ module.exports = {
               fontSize: '20px !important',
               fontWeight: 500
             },
-            ".text-xs": {fontSize: '12px'}
+            ".text-xs": {fontSize: '12px'},
           },
         },
       },

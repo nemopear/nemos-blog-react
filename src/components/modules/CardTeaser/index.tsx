@@ -15,11 +15,11 @@ const CardTeaser = ({ post }) => {
         )} */}
         <div
           key={post.title}
-          className="prose prose-base col-span-1 h-full rounded-md border border-gray-300 p-5"
+          className="prose prose-sm col-span-1 mx-auto flex h-full flex-col rounded-md border border-gray-300 p-5"
         >
-          <h2 className="mb-2 text-xl font-semibold">{post.title}</h2>
-          <p className="line-clamp-none sm:line-clamp-5">{post.excerpt}</p>
-          <div className="mt-1 flex items-center justify-between">
+          <h2 className="!text-md mb-2 font-semibold">{post.title}</h2>
+          <p className="line-clamp-none sm:line-clamp-8">{post.excerpt}</p>
+          <div className="mt-auto flex items-center justify-between">
             <small className="create-at text-sm text-gray-500">
               {moment(post.createdAt).format("MMM Do, YYYY")}
             </small>
