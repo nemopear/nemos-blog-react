@@ -26,7 +26,7 @@ const AboutPage = ({ pages }) => {
           <Grid>
             <Grid.Col>
               <div className="mx-auto aspect-square h-[120px] w-[120px] overflow-hidden rounded-full">
-                <Image
+                <img
                   src={pages[0].thumbnail.url}
                   className="aspect-square object-cover"
                   width={500}
@@ -71,6 +71,7 @@ export async function getStaticProps() {
   return {
     props: {
       pages,
+      fallback: false,
     },
     revalidate: 10,
   };

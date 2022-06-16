@@ -55,7 +55,7 @@ const Home: React.FC = ({ posts, pages }) => {
         <Grid>
           <Grid.Col sm={4}>
             <div className="mx-auto aspect-square h-[120px] w-[120px] overflow-hidden rounded-full sm:ml-auto sm:mr-0">
-              <Image
+              <img
                 src={pages[0].thumbnail.url}
                 className="aspect-square object-cover"
                 width={500}
@@ -126,6 +126,7 @@ export async function getStaticProps() {
     props: {
       posts,
       pages,
+      fallback: false,
     },
     revalidate: 10,
   };
