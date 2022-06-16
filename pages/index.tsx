@@ -29,48 +29,6 @@ const Home: React.FC = ({ posts, pages }) => {
           ],
           site_name: `${CONFIG.defaultTitle}`,
         }}
-        additionalMetaTags={[
-          {
-            name: "image",
-            content: `${pages.thumbnail && pages.thumbnail.url}`,
-          },
-          {
-            property: "og:title",
-            content: `${CONFIG.defaultTitle}`,
-          },
-          {
-            property: "og:description",
-            content: `${CONFIG.defaultTitle}`,
-          },
-          {
-            property: "og:url",
-            content: `${CONFIG.url}`,
-          },
-          {
-            property: "og:image",
-            content: `${pages.thumbnail && pages.thumbnail.url}`,
-          },
-          {
-            name: "twitter:url",
-            content: `${CONFIG.url}`,
-          },
-          {
-            name: "twitter:title",
-            content: `${CONFIG.defaultTitle}`,
-          },
-          {
-            name: "twitter:description",
-            content: `${CONFIG.defaultTitle}`,
-          },
-          {
-            name: "twitter:image:src",
-            content: `${pages.thumbnail && pages.thumbnail.url}`,
-          },
-          {
-            name: "twitter:image",
-            content: `${pages.thumbnail && pages.thumbnail.url}`,
-          },
-        ]}
       />
       <BasicLayout>
         <Main />
