@@ -1,7 +1,7 @@
 import { BasicLayout } from "@components/ui/Layout";
 import Giscus from "@giscus/react";
 import moment from "moment";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
 import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
@@ -11,7 +11,7 @@ const singlePost: React.FC = ({ post }) => {
   // const { title, createdAt, content } = post;
   return (
     <>
-      <NextSeo
+      {/* <NextSeo
         title={CONFIG.defaultTitle}
         description={CONFIG.defaultDescription}
         openGraph={{
@@ -29,7 +29,17 @@ const singlePost: React.FC = ({ post }) => {
           ],
           site_name: `${CONFIG.defaultTitle}`,
         }}
-      />
+      /> */}
+      <Head>
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${CONFIG.url}posts/${post.slug}`} />
+        <meta
+          property="og:image"
+          content={`${post.thumbnail && post.thumbnail.url}`}
+        />
+      </Head>
 
       <BasicLayout>
         <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">

@@ -8,11 +8,9 @@ import "@styles/global.scss";
 import "@styles/tailwind.scss";
 import { getCookie, setCookies } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
-import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import CONFIG from "src/data/config";
 
 function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
@@ -73,15 +71,6 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
             withGlobalStyles
             withNormalizeCSS
           >
-            <DefaultSeo
-              openGraph={{
-                type: "website",
-                locale: "en_IE",
-                url: `${CONFIG.url}`,
-                site_name: `${CONFIG.defaultTitle}`,
-                description: `${CONFIG.defaultDescription}`,
-              }}
-            />
             <Component {...pageProps} />
             {/* <div className="flex space-x-4">
               <Button onClick={() => handleSetAcceptAnalytic(true)}>

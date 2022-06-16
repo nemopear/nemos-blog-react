@@ -2,7 +2,7 @@ import { Main } from "@components/main";
 import CardTeaser from "@components/modules/CardTeaser";
 import { BasicLayout } from "@components/ui/Layout";
 import { Divider, Grid } from "@mantine/core";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 import CONFIG from "src/data/config";
@@ -11,7 +11,7 @@ import { graphCms } from "src/lib/graphCms";
 const Home: React.FC = ({ posts, pages }) => {
   return (
     <>
-      <NextSeo
+      {/* <NextSeo
         title={CONFIG.defaultTitle}
         description={CONFIG.defaultDescription}
         openGraph={{
@@ -29,7 +29,18 @@ const Home: React.FC = ({ posts, pages }) => {
           ],
           site_name: `${CONFIG.defaultTitle}`,
         }}
-      />
+      /> */}
+
+      <Head>
+        <meta property="og:title" content={CONFIG.defaultTitle} />
+        <meta property="og:description" content={CONFIG.defaultDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={CONFIG.url} />
+        <meta
+          property="og:image"
+          content="https://media.graphassets.com/output=format:jpg/resize=width:350,height:350,fit:crop/FWUnmkz9Ruqwt34qsNZ7"
+        />
+      </Head>
       <BasicLayout>
         <Main />
         <div className="container mx-auto max-w-screen-lg flex-1 sm:p-5 lg:my-8">
