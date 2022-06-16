@@ -8,15 +8,18 @@ import "@styles/global.scss";
 import "@styles/tailwind.scss";
 import { getCookie, setCookies } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
+import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
+import CONFIG from "src/data/config";
 
 function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>(
     props.colorScheme
   );
+  // const [acceptAnalytic, setAcceptAnalytic] = useState(false);
 
   const [showChild, setShowChild] = useState(false);
   useEffect(() => {
@@ -26,6 +29,14 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   if (!showChild) {
     return null;
   }
+
+  // const handleSetAcceptAnalytic = (value) => {
+  //   setAcceptAnalytic(value);
+  //   setCookies("Analytic", value, {
+  //     maxAge: 60 * 60 * 24 * 30,
+  //   });
+  //   console.log("get");
+  // };
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
@@ -62,7 +73,23 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
             withGlobalStyles
             withNormalizeCSS
           >
+            <DefaultSeo
+              openGraph={{
+                type: "website",
+                locale: "en_IE",
+                url: "https://nemo-blog.netlify.app/",
+                site_name: `${CONFIG.defaultTitle}`,
+              }}
+            />
             <Component {...pageProps} />
+            {/* <div className="flex space-x-4">
+              <Button onClick={() => handleSetAcceptAnalytic(true)}>
+                Accept
+              </Button>
+              <Button onClick={() => handleSetAcceptAnalytic(false)}>
+                Reject
+              </Button>
+            </div> */}
           </MantineProvider>
         </ColorSchemeProvider>
       </Provider>

@@ -6,6 +6,8 @@ import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
 const singlePost: React.FC = ({ post }) => {
+  console.log("post:", post);
+
   // const { title, createdAt, content } = post;
   return (
     <>
@@ -18,20 +20,57 @@ const singlePost: React.FC = ({ post }) => {
           description: `${post.excerpt}`,
           images: [
             {
-              url: "https://www.example.ie/og-image-01.jpg",
+              url: `${post.thumbnail && post.thumbnail.url}`,
               width: 800,
               height: 600,
-              alt: "Og Image Alt",
+              alt: `${post.title}`,
               type: "image/jpeg",
             },
           ],
-          site_name: "SiteName",
+          site_name: `${CONFIG.defaultTitle}`,
         }}
-        twitter={{
-          handle: "@handle",
-          site: "@site",
-          cardType: "summary_large_image",
-        }}
+        additionalMetaTags={[
+          {
+            name: "image",
+            content: `${post.thumbnail && post.thumbnail.url}`,
+          },
+          {
+            property: "og:title",
+            content: `${post.title}`,
+          },
+          {
+            property: "og:description",
+            content: `${post.excerpt}`,
+          },
+          {
+            property: "og:url",
+            content: `${post.slug}`,
+          },
+          {
+            property: "og:image",
+            content: `${post.thumbnail && post.thumbnail.url}`,
+          },
+          {
+            name: "twitter:url",
+            content: `${post.slug}`,
+          },
+          {
+            name: "twitter:title",
+            content: `${post.title}`,
+          },
+          {
+            name: "twitter:description",
+            content: `${post.excerpt}`,
+          },
+          {
+            name: "twitter:image:src",
+            content: `${post.thumbnail && post.thumbnail.url}`,
+          },
+          {
+            name: "twitter:image",
+            content: `${post.thumbnail && post.thumbnail.url}`,
+          },
+        ]}
       />
       <BasicLayout>
         <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">
@@ -91,6 +130,7 @@ export async function getStaticProps({ params }) {
     `
         query SinglePost($slug: String!) {
             post(where: {slug: $slug}) {
+                slug
                 title
                 thumbnail {
                   url
