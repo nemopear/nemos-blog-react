@@ -11,26 +11,9 @@ const singlePost: React.FC = ({ post }) => {
   // const { title, createdAt, content } = post;
   return (
     <>
-      {/* <NextSeo
-        title={CONFIG.defaultTitle}
-        description={CONFIG.defaultDescription}
-        openGraph={{
-          url: `${CONFIG.url}posts/${post.slug}`,
-          title: `${post.title}`,
-          description: `${post.excerpt}`,
-          images: [
-            {
-              url: `${post.thumbnail && post.thumbnail.url}`,
-              width: 800,
-              height: 600,
-              alt: `${post.title}`,
-              type: "image/jpeg",
-            },
-          ],
-          site_name: `${CONFIG.defaultTitle}`,
-        }}
-      /> */}
       <Head>
+        <title>Nemo's Blog | {post.title}</title>
+
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:type" content="website" />

@@ -32,6 +32,7 @@ const Home: React.FC = ({ posts, pages }) => {
       /> */}
 
       <Head>
+        <title>Nemo's Blog</title>
         <meta property="og:title" content={CONFIG.defaultTitle} />
         <meta property="og:description" content={CONFIG.defaultDescription} />
         <meta property="og:type" content="website" />

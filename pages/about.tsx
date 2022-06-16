@@ -2,6 +2,7 @@ import { BasicLayout } from "@components/ui/Layout";
 import { Grid } from "@mantine/core";
 import Head from "next/head";
 import Image from "next/image";
+import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
 const AboutPage = ({ pages }) => {
@@ -9,6 +10,14 @@ const AboutPage = ({ pages }) => {
     <>
       <Head>
         <title>Nemo's Blog | About me</title>
+        <meta property="og:title" content="Nemo's Blog | About me" />
+        <meta property="og:description" content={CONFIG.defaultDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${CONFIG.url}about}`} />
+        <meta
+          property="og:image"
+          content="https://media.graphassets.com/output=format:jpg/resize=width:350,height:350,fit:crop/FWUnmkz9Ruqwt34qsNZ7"
+        />
       </Head>
       <BasicLayout>
         <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">
