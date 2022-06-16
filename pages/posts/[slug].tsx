@@ -6,7 +6,7 @@ import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
 const singlePost: React.FC = ({ post }) => {
-  console.log("post:", post);
+  // console.log("post:", post);
 
   // const { title, createdAt, content } = post;
   return (
@@ -15,7 +15,7 @@ const singlePost: React.FC = ({ post }) => {
         title={CONFIG.defaultTitle}
         description={CONFIG.defaultDescription}
         openGraph={{
-          url: `${post.slug}`,
+          url: `${CONFIG.url}/posts/${post.slug}`,
           title: `${post.title}`,
           description: `${post.excerpt}`,
           images: [
@@ -44,7 +44,7 @@ const singlePost: React.FC = ({ post }) => {
           },
           {
             property: "og:url",
-            content: `${post.slug}`,
+            content: `${CONFIG.url}/posts/${post.slug}`,
           },
           {
             property: "og:image",
@@ -52,7 +52,7 @@ const singlePost: React.FC = ({ post }) => {
           },
           {
             name: "twitter:url",
-            content: `${post.slug}`,
+            content: `${CONFIG.url}/posts/${post.slug}`,
           },
           {
             name: "twitter:title",
