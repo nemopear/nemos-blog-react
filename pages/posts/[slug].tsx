@@ -13,7 +13,6 @@ const singlePost: React.FC = ({ post }) => {
     <>
       <Head>
         <title>Nemo's Blog | {post.title}</title>
-
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:type" content="website" />
