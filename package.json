@@ -10,7 +10,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --config video=false",
     "cypress:test": "start-server-and-test start http://localhost:3000 cypress:run",
-    "postbuild": "react-snap"
+    "server": "npm run build && node server/index.js"
   },
   "dependencies": {
     "@giscus/react": "^2.0.3",
@@ -29,6 +29,7 @@
     "@tailwindcss/line-clamp": "^0.4.0",
     "cookies-next": "^2.0.4",
     "dayjs": "^1.11.3",
+    "express": "^4.18.1",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
     "moment": "^2.29.3",
@@ -36,6 +37,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-i18next": "^7.0.1",
     "next-seo": "^5.4.0",
+    "nodemon": "^2.0.16",
     "react": "^18.1.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.1.0",
