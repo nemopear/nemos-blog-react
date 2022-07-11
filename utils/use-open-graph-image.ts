@@ -11,6 +11,6 @@ export default function useOpenGraphImage() {
     router.asPath.replace("/posts/", "/posts/open-graph/")
   );
   // Open Graph & Twitter images need a full URL including domain
-  const fullImageURL = getAbsoluteURL(`/api/open-graph-image?${searchParams}`);
+  const fullImageURL = getAbsoluteURL(`api/open-graph-image?${searchParams}`);
   return { imageURL: fullImageURL };
 }

@@ -3,11 +3,10 @@ import Giscus from "@giscus/react";
 import moment from "moment";
 import Head from "next/head";
 import { graphCms } from "src/lib/graphCms";
-import useOpenGraphImage from "utils/use-open-graph-image";
 
 const singlePost: React.FC = ({ post }) => {
   // console.log("post:", post);
-  const { imageURL } = useOpenGraphImage();
+  // const { imageURL } = useOpenGraphImage();
   // const { title, createdAt, content } = post;
   return (
     <>
@@ -16,7 +15,7 @@ const singlePost: React.FC = ({ post }) => {
         <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={post.title} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content={imageURL} />
+        <meta property="og:image" content={post.thumbnail.url} />
       </Head>
 
       <BasicLayout>
