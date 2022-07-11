@@ -16,10 +16,6 @@ class CustomDocument extends Document {
             href="https://use.typekit.net/kpb8sca.css"
           ></link>
           <title>Nemo's Blog 🪐</title>
-          <meta name="description" content="__META_DESCRIPTION__" />
-          <meta name="og:title" content="__META_OG_TITLE__" />
-          <meta name="og:description" content="__META_OG_DESCRIPTION__" />
-          <meta name="og:image" content="__META_OG_IMAGE__" />
           {/* <meta property="og:title" content={CONFIG.defaultTitle} />
           <meta property="og:description" content={CONFIG.defaultDescription} />
           <meta property="og:type" content="website" />

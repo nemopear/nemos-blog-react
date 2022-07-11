@@ -1,4 +1,4 @@
-const posts = [
+export const posts = [
   {
     title: "Post #1",
     description: "This is the first post",

@@ -2,25 +2,21 @@ import { BasicLayout } from "@components/ui/Layout";
 import Giscus from "@giscus/react";
 import moment from "moment";
 import Head from "next/head";
-import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
+import useOpenGraphImage from "utils/use-open-graph-image";
 
 const singlePost: React.FC = ({ post }) => {
   // console.log("post:", post);
-
+  const { imageURL } = useOpenGraphImage();
   // const { title, createdAt, content } = post;
   return (
     <>
       <Head>
         <title>Nemo's Blog | {post.title}</title>
+        <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${CONFIG.url}posts/${post.slug}`} />
-        <meta
-          property="og:image"
-          content={`${post.thumbnail && post.thumbnail.url}`}
-        />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content={imageURL} />
       </Head>
 
       <BasicLayout>
