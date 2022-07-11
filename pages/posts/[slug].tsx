@@ -19,7 +19,7 @@ const singlePost: React.FC = ({ post }) => {
       </Head>
 
       <BasicLayout>
-        <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">
+        <div className="mt-10 lg:mt-20 xl:max-w-2xl">
           <h1 className="mb-4 text-4xl font-medium">{post.title}</h1>
           <div className="create-at my-4 text-sm text-gray-500">
             {moment(post.createdAt).format("MMM Do, YYYY")}
