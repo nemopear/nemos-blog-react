@@ -28,7 +28,7 @@
     "@mantine/spotlight": "^4.2.8",
     "@reduxjs/toolkit": "^1.6.0",
     "@tailwindcss/line-clamp": "^0.4.0",
-    "chrome-aws-lambda": "^8.0.0",
+    "chrome-aws-lambda": "^8.0.2",
     "cookies-next": "^2.0.4",
     "dayjs": "^1.11.3",
     "express": "^4.18.1",
