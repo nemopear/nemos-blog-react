@@ -6,7 +6,7 @@ import { graphCms } from "src/lib/graphCms";
 
 const singlePost: React.FC = ({ post }) => {
   // console.log("post:", post);
-  // const { imageURL } = useOpenGraphImage();
+
   // const { title, createdAt, content } = post;
   return (
     <>
