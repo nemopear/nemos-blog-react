@@ -19,7 +19,6 @@ module.exports = {
               borderRadius: 4,
               display: "inline-block",
               border: "1px solid #dadeed",
-              margin: "12px 0",
               "&:before, &:after": {
                 content: "none !important",
               }
