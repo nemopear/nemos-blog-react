@@ -13,6 +13,17 @@ module.exports = {
               fontWeight: 500
             },
             ".text-xs": {fontSize: '12px'},
+            code: {
+              padding: "1px 14px",
+              backgroundColor: "#f8f9fb",
+              borderRadius: 4,
+              display: "inline-block",
+              border: "1px solid #dadeed",
+              margin: "12px 0",
+              "&:before, &:after": {
+                content: "none !important",
+              }
+            }
           },
         },
       },
