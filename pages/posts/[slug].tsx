@@ -30,7 +30,7 @@ const singlePost: React.FC = ({ post }) => {
           >
             {/* {post.content.html} */}
           </div>
-          <Giscus
+          {/* <Giscus
             id="comments"
             repo="nemopear/nemos-blog-react"
             repoId="R_kgDOHd-iKw"
@@ -43,7 +43,7 @@ const singlePost: React.FC = ({ post }) => {
             inputPosition="top"
             theme="light"
             lang="en"
-          />
+          /> */}
         </div>
       </BasicLayout>
     </>
