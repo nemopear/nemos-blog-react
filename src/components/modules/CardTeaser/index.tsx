@@ -5,7 +5,7 @@ import Link from "next/link";
 const CardTeaser = ({ post }) => {
   // const { title, thumbnail, slug, categories } = post;
   return (
-    <Link href={`/posts/${post.slug}`}>
+    <Link href={`/posts/${post.slug}`} legacyBehavior>
       <a className="relative h-full">
         {/* {post.pin && (
           <div className="absolute right-5 top-2.5 text-xl text-yellow-300">

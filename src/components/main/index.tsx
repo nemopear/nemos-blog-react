@@ -33,7 +33,7 @@ export const Main: React.FC = () => {
             <ul className="flex flex-wrap items-center justify-center">
               {categoryLinks.map((link) => (
                 <li key={link.name} className="m-1">
-                  <Link href={`/categories/${link.name}`}>
+                  <Link href={`/categories/${link.name}`} legacyBehavior>
                     <a>
                       <BadgeCategory
                         bgColor={link.color.css}

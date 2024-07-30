@@ -1,22 +1,18 @@
-import {
-  ColorScheme,
-  ColorSchemeProvider,
-  MantineProvider,
-} from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles/global.css";
 import store from "@redux/store";
 import "@styles/global.scss";
 import "@styles/tailwind.scss";
-import { getCookie, setCookies } from "cookies-next";
+import { theme } from "@styles/theme";
+import { getCookie } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
 import { AppProps } from "next/app";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
-function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
+function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(
-    props.colorScheme
-  );
+
   // const [acceptAnalytic, setAcceptAnalytic] = useState(false);
 
   const [showChild, setShowChild] = useState(false);
@@ -36,43 +32,28 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
   //   console.log("get");
   // };
 
-  const toggleColorScheme = (value?: ColorScheme) => {
-    const nextColorScheme =
-      value || (colorScheme === "dark" ? "light" : "dark");
-    setColorScheme(nextColorScheme);
-    setCookies("mantine-color-scheme", nextColorScheme, {
-      maxAge: 60 * 60 * 24 * 30,
-    });
-  };
+  // const toggleColorScheme = (value?: ColorScheme) => {
+  //   const nextColorScheme =
+  //     value || (colorScheme === "dark" ? "light" : "dark");
+  //   setColorScheme(nextColorScheme);
+  //   setCookies("mantine-color-scheme", nextColorScheme, {
+  //     maxAge: 60 * 60 * 24 * 30,
+  //   });
+  // };
 
   return (
     <>
       <Provider store={store}>
-        <ColorSchemeProvider
-          colorScheme={colorScheme}
-          toggleColorScheme={toggleColorScheme}
+        <MantineProvider
+          // theme={{
+          //   // Override any other properties from default theme
+          //   fontFamily: "urbane-rounded, thongterm, sans-serif",
+          //   // spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+          // }}
+          theme={theme}
         >
-          <MantineProvider
-            theme={{
-              // Override any other properties from default theme
-              fontFamily: "urbane-rounded, thongterm, sans-serif",
-              spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
-            }}
-            defaultProps={{
-              Container: {
-                sizes: {
-                  sm: 576,
-                  md: 768,
-                  lg: 992,
-                  xl: 1200,
-                },
-              },
-            }}
-            withGlobalStyles
-            withNormalizeCSS
-          >
-            <Component {...pageProps} />
-            {/* <div className="flex space-x-4">
+          <Component {...pageProps} />
+          {/* <div className="flex space-x-4">
               <Button onClick={() => handleSetAcceptAnalytic(true)}>
                 Accept
               </Button>
@@ -80,8 +61,7 @@ function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                 Reject
               </Button>
             </div> */}
-          </MantineProvider>
-        </ColorSchemeProvider>
+        </MantineProvider>
       </Provider>
     </>
   );

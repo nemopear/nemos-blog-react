@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
             </div>
 
             <div className="ml-auto flex items-center">
-              <Link href="/about">
+              <Link href="/about" legacyBehavior>
                 <a className="text-sm font-medium text-gray-500 hover:text-gray-900">
                   About
                 </a>

@@ -1,4 +1,3 @@
-import { Container } from "@mantine/core";
 import { Footer } from "./footer";
 import { Header } from "./header";
 
@@ -8,12 +7,12 @@ type BasicLayoutProps = {
 
 export const BasicLayout: React.FC<BasicLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <Container size="lg" className="mb-auto">
-        {children}
-      </Container>
-      <Footer />
+    <div className="container mx-auto max-w-screen-lg  px-4 sm:px-0 ">
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <div className="mb-auto">{children}</div>
+        <Footer />
+      </div>
     </div>
   );
 };

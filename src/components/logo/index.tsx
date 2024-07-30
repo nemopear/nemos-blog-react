@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,7 +8,7 @@ type LogoProps = {
 export const Logo: React.FC<LogoProps> = ({ textClasses, hasImage }) => {
   return (
     <>
-      <Link href="/">
+      <Link href="/" legacyBehavior>
         <a href="/" className="flex items-center">
           {hasImage && (
             <span className="relative mr-2 inline-block h-10 w-10 overflow-hidden rounded-full">
