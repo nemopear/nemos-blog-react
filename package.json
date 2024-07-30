@@ -57,7 +57,7 @@
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@types/react-redux": "^8.0.0",
+    "@types/react-redux": "^7.1.33",
     "autoprefixer": "^10.4.7",
     "cypress": "^6.2.1",
     "dotenv": "^8.2.0",
