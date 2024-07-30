@@ -1,7 +1,6 @@
 import BadgeCategory from "@components/ui/BadgeCategory";
 import moment from "moment";
 import Link from "next/link";
-import React from "react";
 
 const CardTeaser = ({ post }) => {
   // const { title, thumbnail, slug, categories } = post;
@@ -25,8 +24,8 @@ const CardTeaser = ({ post }) => {
             </small>
 
             <BadgeCategory
-              label={post.categories[0].name}
-              bgColor={post.categories[0].color.css}
+              label={post.categories[0]?.name}
+              bgColor={post.categories[0]?.color.css}
               className="!text-xs"
             />
           </div>
