@@ -13,10 +13,16 @@ class CustomDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="shortcut icon" href="/favicon.ico" />
-          <link
+          {/* <link
             rel="stylesheet"
             href="https://use.typekit.net/kpb8sca.css"
-          ></link>
+          ></link> */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;200;300;400;500;600;700&display=swap"
+            rel="stylesheet"
+          />
           <title>Nemo's Blog 🪐</title>
           <meta property="og:title" content={CONFIG.defaultTitle} />
           <meta property="og:description" content={CONFIG.defaultDescription} />
