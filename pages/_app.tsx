@@ -1,5 +1,4 @@
 import { MantineProvider } from "@mantine/core";
-import "@mantine/core/styles/global.css";
 import store from "@redux/store";
 import "@styles/global.scss";
 import "@styles/tailwind.scss";
@@ -51,6 +50,9 @@ function MyApp(props: AppProps) {
           //   // spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
           // }}
           theme={theme}
+          withGlobalStyles
+          withNormalizeCSS
+          withCSSVariables
         >
           <Component {...pageProps} />
           {/* <div className="flex space-x-4">
