@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: npm # or yarn, pip, etc.
     directory: "/" # Location of package files within the repository
     schedule:
-      interval: daily # Check for updates daily. You can set it to daily, weekly, or monthly.
+      interval: weekly # Check for updates daily. You can set it to daily, weekly, or monthly.
     commit-message:
       prefix: "chore"
     open-pull-requests-limit: 100
