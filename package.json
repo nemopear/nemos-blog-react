@@ -37,7 +37,7 @@
     "dayjs": "^1.11.3",
     "eslint-config-next": "13",
     "express": "^4.18.1",
-    "graphql": "^16.5.0",
+    "graphql": "^16.9.0",
     "graphql-request": "^4.3.0",
     "moment": "^2.29.3",
     "next": "13",
