@@ -6,4 +6,4 @@ updates:
       interval: daily # Check for updates daily. You can set it to daily, weekly, or monthly.
     commit-message:
       prefix: "chore"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 100
