@@ -1,7 +1,6 @@
 import { BasicLayout } from "@components/ui/Layout";
 import { Grid } from "@mantine/core";
 import Head from "next/head";
-import Image from "next/image";
 import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
 
@@ -20,9 +19,6 @@ const AboutPage = ({ pages }) => {
         />
       </Head>
       <BasicLayout>
-        <div className="mt-10 lg:mt-20 lg:max-w-xl xl:max-w-2xl">
-          {/* <h1 className="mb-4 text-4xl font-medium">Hi friend</h1> */}
-          {/* about: {JSON.stringify(pages[0].thumbnail)} */}
           <Grid>
             <Grid.Col>
               <div className="mx-auto aspect-square h-[120px] w-[120px] overflow-hidden rounded-full">
@@ -41,7 +37,6 @@ const AboutPage = ({ pages }) => {
               ></div>
             </Grid.Col>
           </Grid>
-        </div>
       </BasicLayout>
     </>
   );

@@ -1,5 +1,4 @@
 import { BasicLayout } from "@components/ui/Layout";
-import Giscus from "@giscus/react";
 import moment from "moment";
 import Head from "next/head";
 import { graphCms } from "src/lib/graphCms";
@@ -15,7 +14,7 @@ const singlePost: React.FC = ({ post }) => {
         <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={post.title} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content={post.thumbnail.url} />
+        {/* <meta property="og:image" content={post.thumbnail.url} /> */}
       </Head>
 
       <BasicLayout>
