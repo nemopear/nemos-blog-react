@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.14",
-    "@types/node": "^22.4.0",
+    "@types/node": "^22.5.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/react-redux": "^7.1.33",
