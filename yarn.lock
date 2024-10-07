@@ -921,10 +921,10 @@
   dependencies:
     ts-toolbelt "^9.6.0"
 
-"@netlify/plugin-nextjs@^5.6.0":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-5.6.0.tgz#970f96b11bee4fe115fad8e3e4f3c6121f97a370"
-  integrity sha512-PBrsd/GJZ9MN8BdyIoleTkY22lAUMfcRxrbb8wgxGzXtTW0RU0GW2mc99ISB6zOwWMZ11rSjeN0GS6znnukvww==
+"@netlify/plugin-nextjs@^5.7.3":
+  version "5.7.3"
+  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-5.7.3.tgz#85f18b0f3ed5830bbf0f2b606f0a7fbebbeae02f"
+  integrity sha512-J4q4VBv63I+1/DfUiaqtmHzkoLWz+m+fTiSyb299bonC6SNGr1WeChgXNseVO/jzpuxCGUirEabA3LKrbxov+A==
 
 "@next/env@14.2.5":
   version "14.2.5"
