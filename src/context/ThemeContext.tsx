@@ -1,44 +1,61 @@
+"use client";
+
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
+type ThemeMode = "light" | "dark";
+
 interface ThemeContextType {
+  mode: ThemeMode;
   toggleTheme: () => void;
-  mode: "light" | "dark";
+  mounted: boolean;
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
-  toggleTheme: () => {},
   mode: "light",
+  toggleTheme: () => {},
+  mounted: false,
 });
 
 export const useThemeMode = () => useContext(ThemeContext);
 
-export const ThemeContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+export function ThemeContextProvider({ children }: { children: ReactNode }) {
+  const [mode, setMode] = useState<ThemeMode>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedMode = localStorage.getItem("theme-mode") as "light" | "dark";
-    const initialMode = savedMode || 
-      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setMode(initialMode);
-    document.documentElement.setAttribute("data-theme", initialMode);
+    
+    // Check localStorage first, then system preference
+    const stored = localStorage.getItem("theme-mode") as ThemeMode | null;
+    if (stored === "light" || stored === "dark") {
+      setMode(stored);
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setMode("dark");
+    }
   }, []);
 
+  useEffect(() => {
+    if (!mounted) return;
+    
+    // Apply theme to document
+    const root = document.documentElement;
+    
+    if (mode === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    
+    localStorage.setItem("theme-mode", mode);
+  }, [mode, mounted]);
+
   const toggleTheme = () => {
-    const newMode = mode === "light" ? "dark" : "light";
-    setMode(newMode);
-    localStorage.setItem("theme-mode", newMode);
-    document.documentElement.setAttribute("data-theme", newMode);
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  const value = mounted 
-    ? { toggleTheme, mode } 
-    : { toggleTheme, mode: "light" as const };
-
   return (
-    <ThemeContext.Provider value={value}>
+    <ThemeContext.Provider value={{ mode, toggleTheme, mounted }}>
       {children}
     </ThemeContext.Provider>
   );
-};
+}

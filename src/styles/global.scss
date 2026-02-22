@@ -7,18 +7,27 @@ body {
     "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
   background-color: #ffffff;
-  transition: background-color 0.3s ease;
+  color: #212529;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: #1a1b1e;
-  }
-  body {
-    background-color: #1a1b1e;
-  }
-}
-
-[data-theme="dark"] {
+/* Dark mode styles */
+.dark html,
+.dark body {
   background-color: #1a1b1e;
+  color: #c1c2c5;
+}
+
+/* Ensure smooth theme transitions */
+html {
+  transition-property: background-color, color;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    transition: none;
+  }
 }

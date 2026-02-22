@@ -4,17 +4,20 @@ import CONFIG from "src/data/config";
 class CustomDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" suppressHydrationWarning>
         <Head>
           <script
             dangerouslySetInnerHTML={{
               __html: `
-                try {
-                  var theme = localStorage.getItem('theme-mode');
-                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.style.setProperty('background-color', '#121212');
-                  }
-                } catch (e) {}
+                (function() {
+                  try {
+                    var theme = localStorage.getItem('theme-mode');
+                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (theme === 'dark' || (!theme && prefersDark)) {
+                      document.documentElement.classList.add('dark');
+                    }
+                  } catch (e) {}
+                })();
               `,
             }}
           />
@@ -29,13 +32,10 @@ class CustomDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
           />
-          <meta name="theme-color" content="#1976d2" />
+          <meta name="theme-color" content="#228be6" />
           <meta name="color-scheme" content="light dark" />
           <meta property="og:title" content={CONFIG.defaultTitle} />
-          <meta
-            property="og:description"
-            content={CONFIG.defaultDescription}
-          />
+          <meta property="og:description" content={CONFIG.defaultDescription} />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={CONFIG.url} />
           <meta

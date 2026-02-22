@@ -8,6 +8,7 @@ import {
   Chip,
   IconButton,
   Grid,
+  useTheme,
 } from "@mui/material";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -54,11 +55,18 @@ const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
   post,
   relatedPosts,
 }) => {
+  const theme = useTheme();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeHeading, setActiveHeading] = useState<string>("");
   const { mode } = useThemeMode();
   const [giscusTheme, setGiscusTheme] = useState("light");
+
+  const isDark = mode === "dark";
+  const codeBg = isDark ? "#2d2d30" : "#f5f5f5";
+  const textColor = isDark ? "#d4d4d4" : "#333333";
+  const headingColor = isDark ? "#ffffff" : "#212529";
+  const linkColor = isDark ? "#4da3ff" : "#228be6";
 
   useEffect(() => {
     setGiscusTheme(mode === "dark" ? "dark_dimmed" : "light");
@@ -263,41 +271,64 @@ const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
               <Box
                 className="content prose"
                 sx={{
+                  color: textColor,
                   "& h2": {
                     fontSize: "1.5rem",
                     fontWeight: 600,
                     mt: 4,
                     mb: 2,
+                    color: headingColor,
                   },
                   "& h3": {
                     fontSize: "1.25rem",
                     fontWeight: 600,
                     mt: 3,
                     mb: 2,
+                    color: headingColor,
                   },
                   "& p": {
                     lineHeight: 1.8,
                     mb: 2,
                   },
                   "& code": {
-                    bgcolor: "#f5f5f5",
+                    bgcolor: codeBg,
                     px: 1,
                     py: 0.5,
                     borderRadius: 1,
                     fontSize: "0.875rem",
+                    color: isDark ? "#d4d4d4" : "#333333",
                   },
                   "& pre": {
-                    bgcolor: "#f5f5f5",
+                    bgcolor: codeBg,
                     p: 2,
                     borderRadius: 2,
                     overflow: "auto",
+                    "& code": {
+                      bgcolor: "transparent",
+                      p: 0,
+                    },
                   },
                   "& img": {
                     maxWidth: "100%",
                     borderRadius: 2,
                   },
                   "& a": {
-                    color: "primary.main",
+                    color: linkColor,
+                    textDecoration: "underline",
+                  },
+                  "& ul, & ol": {
+                    pl: 3,
+                    mb: 2,
+                  },
+                  "& li": {
+                    mb: 1,
+                  },
+                  "& blockquote": {
+                    borderLeft: `4px solid ${isDark ? "#4da3ff" : "#228be6"}`,
+                    pl: 2,
+                    ml: 0,
+                    fontStyle: "italic",
+                    color: isDark ? "#b0b0b0" : "#666666",
                   },
                 }}
                 dangerouslySetInnerHTML={{ __html: post.content.html }}
