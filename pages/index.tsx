@@ -1,34 +1,35 @@
 import { Main } from "@components/main";
 import CardTeaser from "@components/modules/CardTeaser";
 import { BasicLayout } from "@components/ui/Layout";
+import { Box, Container, Grid, Typography, Chip } from "@mui/material";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import CONFIG from "src/data/config";
 import { graphCms } from "src/lib/graphCms";
+import PushPinIcon from "@mui/icons-material/PushPin";
 
-const Home: React.FC = ({ posts, pages }) => {
+interface Post {
+  title: string;
+  slug: string;
+  excerpt: string;
+  createdAt: string;
+  thumbnail?: { url: string };
+  categories: Array<{
+    name: string;
+    color: { css: string };
+  }>;
+  pin?: boolean;
+}
+
+const Home: React.FC<{ posts: Post[]; pinnedPosts: Post[] }> = ({
+  posts,
+  pinnedPosts,
+}) => {
+  const regularPosts = posts.filter((post) => !post.pin);
+
   return (
     <>
-      {/* <NextSeo
-        title={CONFIG.defaultTitle}
-        description={CONFIG.defaultDescription}
-        openGraph={{
-          url: `${CONFIG.url}`,
-          title: `${CONFIG.defaultTitle}`,
-          description: `${CONFIG.defaultDescription}`,
-          images: [
-            {
-              url: "https://media.graphassets.com/output=format:jpg/resize=width:350,height:350,fit:crop/FWUnmkz9Ruqwt34qsNZ7",
-              width: 400,
-              height: 400,
-              alt: `${CONFIG.defaultTitle}`,
-              type: "image/jpeg",
-            },
-          ],
-          site_name: `${CONFIG.defaultTitle}`,
-        }}
-      /> */}
-
       <Head>
         <title>Nemo's Blog</title>
         <meta property="og:title" content={CONFIG.defaultTitle} />
@@ -42,33 +43,37 @@ const Home: React.FC = ({ posts, pages }) => {
       </Head>
       <BasicLayout>
         <Main />
-        <div className="flex-1lg:my-8 container mx-auto max-w-screen-lg">
-          <div className="grid grid-cols-1 gap-6 md:auto-rows-[1fr] md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <CardTeaser key={post.slug} post={post} />
-            ))}
-          </div>
-        </div>
 
-        {/* <Divider className="my-8" />
-        <Grid>
-          <Grid.Col sm={4}>
-            <div className="mx-auto aspect-square h-[120px] w-[120px] overflow-hidden rounded-full sm:ml-auto sm:mr-0">
-              <img
-                src={pages[0].thumbnail.url}
-                className="aspect-square object-cover"
-                width={500}
-                height={500}
-              />
-            </div>
-          </Grid.Col>
-          <Grid.Col sm={6}>
-            <div
-              className="content prose my-2 sm:my-0 lg:prose-base"
-              dangerouslySetInnerHTML={{ __html: pages[0].content.html }}
-            ></div>
-          </Grid.Col>
-        </Grid> */}
+        {pinnedPosts.length > 0 ? (
+          <Box sx={{ mb: 6 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
+              <PushPinIcon color="warning" />
+              <Typography variant="h5" component="h2" fontWeight={600}>
+                Featured Posts
+              </Typography>
+            </Box>
+            <Grid container spacing={3}>
+              {pinnedPosts.map((post) => (
+                <Grid item xs={12} md={6} key={post.slug}>
+                  <CardTeaser post={post} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        ) : null}
+
+        <Box sx={{ flexGrow: 1, my: 4 }}>
+          <Typography variant="h5" component="h2" fontWeight={600} sx={{ mb: 3 }}>
+            Latest Posts
+          </Typography>
+          <Grid container spacing={3}>
+            {regularPosts.map((post) => (
+              <Grid item xs={12} sm={6} md={4} key={post.slug}>
+                <CardTeaser post={post} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </BasicLayout>
     </>
   );
@@ -77,12 +82,7 @@ const Home: React.FC = ({ posts, pages }) => {
 export default Home;
 
 export async function getStaticProps() {
-  // const req = await fetch('https://jsonplaceholder.typicode.com/todos/');
-  // const data = await req.json();
-  // return {
-  //     props: {data}
-  // }
-  const { posts } = await graphCms.request(`
+  const postsQuery = graphCms.request(`
         {
             posts(orderBy: createdAt_DESC) {
               createdAt
@@ -108,7 +108,7 @@ export async function getStaticProps() {
         }
         `);
 
-  const { pages } = await graphCms.request(`
+  const pagesQuery = graphCms.request(`
         {
           pages(where: { title_contains: "about"}) {
             id
@@ -121,9 +121,15 @@ export async function getStaticProps() {
           }
         }
         `);
+
+  const [{ posts }, { pages }] = await Promise.all([postsQuery, pagesQuery]);
+
+  const pinnedPosts = posts.filter((post: Post) => post.pin);
+
   return {
     props: {
       posts,
+      pinnedPosts,
       pages,
       fallback: false,
     },

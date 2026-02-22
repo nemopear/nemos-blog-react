@@ -1,36 +1,27 @@
-import { Badge } from "@mantine/core";
+import { Chip } from "@mui/material";
+
 type BadgeCategoryProps = {
-  bgColor: string;
-  label: string;
+  bgColor?: string;
+  label?: string;
   className?: string;
 };
+
 const BadgeCategory = ({ bgColor, label, className }: BadgeCategoryProps) => {
   return (
-    // <Badge
-    //   className={`btn-transition cursor-pointer py-3 text-sm font-medium capitalize ${
-    //     className !== undefined ? className : ""
-    //   }`}
-    //   color="orange"
-    //   variant="dot"
-    // >
-    //   {label}
-    // </Badge>
-    <Badge
-      className={`btn-transition cursor-pointer py-3 text-sm font-medium capitalize  ${
-        className !== undefined ? className : ""
-      }`}
-      color={bgColor}
-      variant="dot"
-      style={{
-        // backgroundColor: `${bgColor}`,
-        // color: "#fff",
+    <Chip
+      label={label}
+      size="small"
+      className={className}
+      sx={{
+        bgcolor: bgColor || "#e0e0e0",
+        color: "#fff",
+        fontWeight: 500,
+        cursor: "pointer",
         "&:hover": {
-          opacity: ".8",
+          opacity: 0.8,
         },
       }}
-    >
-      {label}
-    </Badge>
+    />
   );
 };
 

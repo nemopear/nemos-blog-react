@@ -1,10 +1,11 @@
 import { BasicLayout } from "@components/";
 import CardTeaser from "@components/modules/CardTeaser";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { graphCms } from "src/lib/graphCms";
 
-const CategoriesList = ({ posts }) => {
+const CategoriesList = ({ posts }: { posts: any[] }) => {
   const router = useRouter();
   const { name } = router.query;
 
@@ -14,23 +15,37 @@ const CategoriesList = ({ posts }) => {
         <title>Nemo's Blog | {name}</title>
       </Head>
       <BasicLayout>
-        {/* {JSON.stringify(posts)} */}
-        <div className="container my-2 mx-auto max-w-screen-lg flex-1 p-5 lg:my-8">
-          <h1 className="mb-4 capitalize">{name}</h1>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* {console.log(posts)} */}
-
-            {/* {posts && posts.lenght > 0 && "No posts"} */}
-            {posts &&
-              posts.map((post) => <CardTeaser key={post.slug} post={post} />)}
-          </div>
-        </div>
+        <Container maxWidth="lg" sx={{ flex: 1, py: { xs: 2, lg: 8 } }}>
+          <Typography
+            variant="h4"
+            component="h1"
+            sx={{ mb: 4, textTransform: "capitalize" }}
+          >
+            {name}
+          </Typography>
+          <Grid container spacing={3}>
+            {posts && posts.length > 0 ? (
+              posts.map((post) => (
+                <Grid item xs={12} sm={6} md={4} key={post.slug}>
+                  <CardTeaser post={post} />
+                </Grid>
+              ))
+            ) : (
+              <Box sx={{ py: 8, textAlign: "center" }}>
+                <Typography variant="h6" color="text.secondary">
+                  No posts found in this category.
+                </Typography>
+              </Box>
+            )}
+          </Grid>
+        </Container>
       </BasicLayout>
     </>
   );
 };
 
 export default CategoriesList;
+
 export async function getStaticPaths() {
   const posts = await graphCms.request(`
       {
@@ -40,22 +55,18 @@ export async function getStaticPaths() {
       }     
     `);
 
-  const paths = posts.categories.map(({ name }) => ({
+  const paths = posts.categories.map(({ name }: { name: string }) => ({
     params: {
       name,
     },
   }));
-  // const paths = ({ id }) => ({
-  //   params: {
-  //     name: ["react"],
-  //   },
-  // });
   return {
     paths,
     fallback: "blocking",
   };
 }
-export async function getStaticProps({ params }) {
+
+export async function getStaticProps({ params }: { params: { name: string } }) {
   const { posts } = await graphCms.request(
     `query Posts($name: String!) {
   posts(where: {categories_every: {name: $name}}) {

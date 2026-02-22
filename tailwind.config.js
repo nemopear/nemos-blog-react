@@ -28,12 +28,6 @@ module.exports = {
           },
         },
       },
-      lineClamp: {
-        7: "7",
-        8: "8",
-        9: "9",
-        10: "10",
-      },
     },
     screens: {
       sm: "768px",
@@ -47,6 +41,5 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    require("@tailwindcss/line-clamp"),
   ],
 };

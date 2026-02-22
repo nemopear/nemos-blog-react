@@ -1,12 +1,110 @@
 import { BasicLayout } from "@components/ui/Layout";
+import {
+  Box,
+  Container,
+  Typography,
+  Divider,
+  LinearProgress,
+  Chip,
+  IconButton,
+  Grid,
+} from "@mui/material";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Link from "next/link";
 import moment from "moment";
 import Head from "next/head";
 import { graphCms } from "src/lib/graphCms";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useThemeMode } from "src/context/ThemeContext";
+import CardTeaser from "@components/modules/CardTeaser";
 
-const singlePost: React.FC = ({ post }) => {
-  // console.log("post:", post);
+const Giscus = dynamic(() => import("@giscus/react"), { ssr: false });
 
-  // const { title, createdAt, content } = post;
+interface Heading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+const calculateReadingTime = (text: string): number => {
+  const wordsPerMinute = 200;
+  const words = text.split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+};
+
+const parseHeadings = (html: string): Heading[] => {
+  const headings: Heading[] = [];
+  const regex = /<h([2-3])[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h[2-3]>/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    headings.push({
+      id: match[2],
+      text: match[3],
+      level: parseInt(match[1]),
+    });
+  }
+  return headings;
+};
+
+const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
+  post,
+  relatedPosts,
+}) => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [headings, setHeadings] = useState<Heading[]>([]);
+  const [activeHeading, setActiveHeading] = useState<string>("");
+  const { mode } = useThemeMode();
+  const [giscusTheme, setGiscusTheme] = useState("light");
+
+  useEffect(() => {
+    setGiscusTheme(mode === "dark" ? "dark_dimmed" : "light");
+  }, [mode]);
+
+  const readingTime = calculateReadingTime(post.content.text || "");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const extractedHeadings = parseHeadings(post.content.html);
+    setHeadings(extractedHeadings);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveHeading(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-100px 0px -66%" }
+    );
+
+    extractedHeadings.forEach((heading) => {
+      const element = document.getElementById(heading.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [post.content.html]);
+
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const shareTitle = post.title;
+
   return (
     <>
       <Head>
@@ -14,36 +112,236 @@ const singlePost: React.FC = ({ post }) => {
         <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={post.title} />
         <meta property="og:type" content="article" />
-        {/* <meta property="og:image" content={post.thumbnail.url} /> */}
       </Head>
 
-      <BasicLayout>
-        <div className="mt-10 lg:mt-20 xl:max-w-2xl">
-          <h1 className="mb-4 text-4xl font-medium">{post.title}</h1>
-          <div className="create-at my-4 text-sm text-gray-500">
-            {moment(post.createdAt).format("MMM Do, YYYY")}
-          </div>
-          <div
-            className="content prose my-8 lg:prose-base lg:my-16"
-            dangerouslySetInnerHTML={{ __html: post.content.html }}
-          >
-            {/* {post.content.html} */}
-          </div>
-          {/* <Giscus
-            id="comments"
-            repo="nemopear/nemos-blog-react"
-            repoId="R_kgDOHd-iKw"
-            category="General"
-            categoryId="DIC_kwDOHd-iK84CPk7v"
-            mapping="title"
-            term="Welcome to Nemo's Blog !"
-            reactionsEnabled="1"
-            emitMetadata="0"
-            inputPosition="top"
-            theme="light"
-            lang="en"
-          /> */}
-        </div>
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 1000,
+        }}
+      >
+        <LinearProgress variant="determinate" value={scrollProgress} />
+      </Box>
+
+      <BasicLayout maxWidth="lg">
+        <Container maxWidth="lg">
+          <Grid container spacing={4}>
+            {headings.length > 0 && (
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{ display: { xs: "none", md: "block" } }}
+              >
+                <Box
+                  sx={{
+                    position: "sticky",
+                    top: 100,
+                    maxHeight: "calc(100vh - 120px)",
+                    overflowY: "auto",
+                  }}
+                >
+                  <Typography
+                    variant="overline"
+                    color="text.secondary"
+                    fontWeight={600}
+                  >
+                    On this page
+                  </Typography>
+                  {headings.map((heading) => (
+                    <Link
+                      key={heading.id}
+                      href={`#${heading.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          py: 0.5,
+                          pl: heading.level === 3 ? 2 : 0,
+                          color:
+                            activeHeading === heading.id
+                              ? "primary.main"
+                              : "text.secondary",
+                          fontWeight:
+                            activeHeading === heading.id ? 600 : 400,
+                          "&:hover": { color: "primary.main" },
+                        }}
+                      >
+                        {heading.text}
+                      </Typography>
+                    </Link>
+                  ))}
+                </Box>
+              </Grid>
+            )}
+
+            <Grid item xs={12} md={9}>
+              <Link href="/" style={{ textDecoration: "none" }}>
+                <IconButton size="small" sx={{ mb: 2 }}>
+                  <ArrowBackIcon />
+                  <Typography variant="body2" sx={{ ml: 1 }}>
+                    Back to posts
+                  </Typography>
+                </IconButton>
+              </Link>
+
+              <Typography
+                variant="h3"
+                component="h1"
+                gutterBottom
+                fontWeight={600}
+              >
+                {post.title}
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  mb: 3,
+                  flexWrap: "wrap",
+                }}
+              >
+                <Typography variant="body2" color="text.secondary">
+                  {moment(post.createdAt).format("MMM Do, YYYY")}
+                </Typography>
+                <Chip
+                  label={`${readingTime} min read`}
+                  size="small"
+                  variant="outlined"
+                />
+                <Box sx={{ ml: "auto", display: "flex", gap: 1 }}>
+                  <IconButton
+                    size="small"
+                    onClick={() =>
+                      window.open(
+                        `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                          shareTitle
+                        )}&url=${encodeURIComponent(shareUrl)}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    <TwitterIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() =>
+                      window.open(
+                        `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+                          shareUrl
+                        )}&title=${encodeURIComponent(shareTitle)}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    <LinkedInIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() =>
+                      window.open(
+                        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                          shareUrl
+                        )}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    <FacebookIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              </Box>
+
+              <Divider sx={{ mb: 4 }} />
+
+              <Box
+                className="content prose"
+                sx={{
+                  "& h2": {
+                    fontSize: "1.5rem",
+                    fontWeight: 600,
+                    mt: 4,
+                    mb: 2,
+                  },
+                  "& h3": {
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                    mt: 3,
+                    mb: 2,
+                  },
+                  "& p": {
+                    lineHeight: 1.8,
+                    mb: 2,
+                  },
+                  "& code": {
+                    bgcolor: "#f5f5f5",
+                    px: 1,
+                    py: 0.5,
+                    borderRadius: 1,
+                    fontSize: "0.875rem",
+                  },
+                  "& pre": {
+                    bgcolor: "#f5f5f5",
+                    p: 2,
+                    borderRadius: 2,
+                    overflow: "auto",
+                  },
+                  "& img": {
+                    maxWidth: "100%",
+                    borderRadius: 2,
+                  },
+                  "& a": {
+                    color: "primary.main",
+                  },
+                }}
+                dangerouslySetInnerHTML={{ __html: post.content.html }}
+              />
+
+              <Divider sx={{ my: 4 }} />
+
+              <Giscus
+                id="comments"
+                repo="nemopear/nemos-blog-react"
+                repoId="R_kgDOHd-iKw"
+                category="General"
+                categoryId="DIC_kwDOHd-iK84CPk7v"
+                mapping="title"
+                term="Welcome to Nemo's Blog!"
+                reactionsEnabled="1"
+                emitMetadata="0"
+                inputPosition="top"
+                theme={giscusTheme}
+                lang="en"
+              />
+            </Grid>
+          </Grid>
+
+          {relatedPosts.length > 0 ? (
+            <Box sx={{ mt: 8 }}>
+              <Typography
+                variant="h5"
+                component="h2"
+                fontWeight={600}
+                sx={{ mb: 3 }}
+              >
+                Related Posts
+              </Typography>
+              <Grid container spacing={3}>
+                {relatedPosts.map((relatedPost) => (
+                  <Grid item xs={12} sm={6} md={4} key={relatedPost.slug}>
+                    <CardTeaser post={relatedPost} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          ) : null}
+        </Container>
       </BasicLayout>
     </>
   );
@@ -59,7 +357,7 @@ export async function getStaticPaths() {
             }
         }
     `);
-  const paths = posts.map(({ slug }) => ({
+  const paths = posts.map(({ slug }: { slug: string }) => ({
     params: {
       slug,
     },
@@ -70,7 +368,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: { params: { slug: string } }) {
   const { post } = await graphCms.request(
     `
         query SinglePost($slug: String!) {
@@ -83,17 +381,52 @@ export async function getStaticProps({ params }) {
                 createdAt
                 content {
                     html
+                    text
                 }
                 excerpt
+                categories {
+                  name
+                  color {
+                    css
+                  }
+                }
             }
         }      
     `,
     { slug: params.slug }
   );
 
+  const { posts: allPosts } = await graphCms.request(`
+    {
+      posts {
+        slug
+        title
+        excerpt
+        createdAt
+        categories {
+          name
+          color {
+            css
+          }
+        }
+      }
+    }
+  `);
+
+  const relatedPosts = allPosts
+    .filter(
+      (p: any) =>
+        p.slug !== params.slug &&
+        p.categories?.some((c: any) =>
+          post.categories?.some((pc: any) => pc.name === c.name)
+        )
+    )
+    .slice(0, 3);
+
   return {
     props: {
       post,
+      relatedPosts,
       revalidate: 10,
       fallback: false,
     },

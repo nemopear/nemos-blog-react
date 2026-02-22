@@ -1,43 +1,115 @@
-import BadgeCategory from "@components/ui/BadgeCategory";
+import { memo } from "react";
+import { Card, CardContent, CardActionArea, Chip, Typography, Box } from "@mui/material";
 import moment from "moment";
 import Link from "next/link";
 
-const CardTeaser = ({ post }) => {
-  // const { title, thumbnail, slug, categories } = post;
-  return (
-    <Link href={`/posts/${post.slug}`} legacyBehavior>
-      <a className="relative h-full">
-        {/* {post.pin && (
-          <div className="absolute right-5 top-2.5 text-xl text-yellow-300">
-            <BsFillStarFill />
-          </div>
-        )} */}
-        <div
-          key={post.title}
-          className="prose prose-sm col-span-1 mx-auto flex h-full flex-col rounded-md border border-gray-300 p-5"
-        >
-          <h2 className="!text-md mb-2 font-semibold">{post.title}</h2>
-          <p className="line-clamp-none sm:line-clamp-8">{post.excerpt}</p>
-          <div className="mt-auto flex items-center justify-between">
-            <small className="create-at text-sm text-gray-500">
-              {moment(post.createdAt).format("MMM Do, YYYY")}
-            </small>
+interface Post {
+  title: string;
+  slug: string;
+  excerpt: string;
+  createdAt: string;
+  thumbnail?: { url: string };
+  categories: Array<{
+    name: string;
+    color: { css: string };
+  }>;
+  pin?: boolean;
+}
 
-            <BadgeCategory
-              label={post.categories[0]?.name}
-              bgColor={post.categories[0]?.color.css}
-              className="!text-xs"
-            />
-          </div>
-          {/* <div
-              className="m-0"
-              dangerouslySetInnerHTML={{ __html: post.content.html }}
-            /> */}
-        </div>
-        {/* Post: {JSON.stringify(post)} */}
-      </a>
+interface CardTeaserProps {
+  post: Post;
+}
+
+const CardTeaser: React.FC<CardTeaserProps> = ({ post }) => {
+  const category = post.categories?.[0];
+
+  return (
+    <Link href={`/posts/${post.slug}`} style={{ textDecoration: "none" }}>
+      <Card
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          border: "1px solid",
+          borderColor: "divider",
+          transition: "box-shadow 0.2s, transform 0.2s",
+          "&:hover": {
+            boxShadow: 4,
+            transform: "translateY(-2px)",
+          },
+        }}
+      >
+        <CardActionArea sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <CardContent sx={{ flexGrow: 1, width: "100%" }}>
+            <Typography
+              variant="h6"
+              component="h2"
+              gutterBottom
+              sx={{
+                fontSize: "1rem",
+                fontWeight: 600,
+                lineHeight: 1.4,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {post.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: "-webkit-box",
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                mb: 2,
+              }}
+            >
+              {post.excerpt}
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mt: "auto",
+              }}
+            >
+              <Typography variant="caption" color="text.secondary">
+                {moment(post.createdAt).format("MMM Do, YYYY")}
+              </Typography>
+              {category ? (
+                <Chip
+                  label={category.name}
+                  size="small"
+                  sx={{
+                    bgcolor: category.color?.css || "#e0e0e0",
+                    color: "#fff",
+                    fontSize: "0.75rem",
+                    height: 24,
+                  }}
+                />
+              ) : null}
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     </Link>
   );
 };
 
-export default CardTeaser;
+const CardTeaserMemo = memo(CardTeaser, (prevProps, nextProps) => {
+  return (
+    prevProps.post.slug === nextProps.post.slug &&
+    prevProps.post.title === nextProps.post.title &&
+    prevProps.post.excerpt === nextProps.post.excerpt &&
+    prevProps.post.createdAt === nextProps.post.createdAt
+  );
+});
+
+CardTeaserMemo.displayName = "CardTeaser";
+
+export default CardTeaserMemo;
