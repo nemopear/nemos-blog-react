@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useThemeMode } from "src/context/ThemeContext";
 import CardTeaser from "@components/modules/CardTeaser";
+import { lightTheme, darkTheme } from "src/theme/colors";
 
 const Giscus = dynamic(() => import("@giscus/react"), { ssr: false });
 
@@ -63,10 +64,7 @@ const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
   const [giscusTheme, setGiscusTheme] = useState("light");
 
   const isDark = mode === "dark";
-  const codeBg = isDark ? "#2d2d30" : "#f5f5f5";
-  const textColor = isDark ? "#d4d4d4" : "#333333";
-  const headingColor = isDark ? "#ffffff" : "#212529";
-  const linkColor = isDark ? "#4da3ff" : "#228be6";
+  const themeColors = isDark ? darkTheme : lightTheme;
 
   useEffect(() => {
     setGiscusTheme(mode === "dark" ? "dark_dimmed" : "light");
@@ -271,35 +269,63 @@ const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
               <Box
                 className="content prose"
                 sx={{
-                  color: textColor,
+                  color: themeColors.body.color,
+                  "& h1": {
+                    fontSize: "2rem",
+                    fontWeight: 700,
+                    mt: 4,
+                    mb: 3,
+                    color: themeColors.heading.color,
+                  },
                   "& h2": {
                     fontSize: "1.5rem",
                     fontWeight: 600,
                     mt: 4,
                     mb: 2,
-                    color: headingColor,
+                    color: themeColors.heading.color,
                   },
                   "& h3": {
                     fontSize: "1.25rem",
                     fontWeight: 600,
                     mt: 3,
                     mb: 2,
-                    color: headingColor,
+                    color: themeColors.heading.color,
+                  },
+                  "& h4": {
+                    fontSize: "1.125rem",
+                    fontWeight: 600,
+                    mt: 3,
+                    mb: 2,
+                    color: themeColors.heading.color,
+                  },
+                  "& h5": {
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    mt: 2,
+                    mb: 1,
+                    color: themeColors.heading.color,
+                  },
+                  "& h6": {
+                    fontSize: "0.875rem",
+                    fontWeight: 600,
+                    mt: 2,
+                    mb: 1,
+                    color: themeColors.heading.color,
                   },
                   "& p": {
                     lineHeight: 1.8,
                     mb: 2,
                   },
                   "& code": {
-                    bgcolor: codeBg,
+                    bgcolor: themeColors.code.bg,
                     px: 1,
                     py: 0.5,
                     borderRadius: 1,
                     fontSize: "0.875rem",
-                    color: isDark ? "#d4d4d4" : "#333333",
+                    color: themeColors.code.text,
                   },
                   "& pre": {
-                    bgcolor: codeBg,
+                    bgcolor: themeColors.code.bg,
                     p: 2,
                     borderRadius: 2,
                     overflow: "auto",
@@ -313,7 +339,7 @@ const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
                     borderRadius: 2,
                   },
                   "& a": {
-                    color: linkColor,
+                    color: themeColors.link.color,
                     textDecoration: "underline",
                   },
                   "& ul, & ol": {
@@ -324,11 +350,65 @@ const singlePost: React.FC<{ post: any; relatedPosts: any[] }> = ({
                     mb: 1,
                   },
                   "& blockquote": {
-                    borderLeft: `4px solid ${isDark ? "#4da3ff" : "#228be6"}`,
+                    borderLeft: `4px solid ${themeColors.blockquote.border}`,
                     pl: 2,
                     ml: 0,
                     fontStyle: "italic",
-                    color: isDark ? "#b0b0b0" : "#666666",
+                    color: themeColors.blockquote.text,
+                  },
+                  "& strong, & b": {
+                    fontWeight: 700,
+                    color: themeColors.heading.color,
+                  },
+                  "& em, & i": {
+                    fontStyle: "italic",
+                    color: themeColors.text.secondary,
+                  },
+                  "& table": {
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    mb: 2,
+                  },
+                  "& th, & td": {
+                    border: `1px solid ${themeColors.divider}`,
+                    px: 2,
+                    py: 1,
+                    textAlign: "left",
+                  },
+                  "& th": {
+                    bgcolor: isDark ? "#2d2d30" : "#f5f5f5",
+                    fontWeight: 600,
+                    color: themeColors.heading.color,
+                  },
+                  "& td": {
+                    color: themeColors.body.color,
+                  },
+                  "& hr": {
+                    border: "none",
+                    borderTop: `1px solid ${themeColors.divider}`,
+                    my: 3,
+                  },
+                  "& ul, & ol": {
+                    pl: 3,
+                    mb: 2,
+                  },
+                  "& li": {
+                    mb: 1,
+                    color: themeColors.body.color,
+                  },
+                  "& input, & textarea, & select": {
+                    bgcolor: isDark ? "#2d2d30" : "#ffffff",
+                    color: themeColors.body.color,
+                    border: `1px solid ${themeColors.divider}`,
+                    borderRadius: 1,
+                    px: 1,
+                    py: 0.5,
+                  },
+                  "& mark": {
+                    bgcolor: isDark ? "#4da3ff" : "#ffeb3b",
+                    color: isDark ? "#000000" : "#000000",
+                    px: 0.5,
+                    borderRadius: 1,
                   },
                 }}
                 dangerouslySetInnerHTML={{ __html: post.content.html }}
