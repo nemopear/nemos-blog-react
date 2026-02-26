@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Chip,
+  Container,
   Dialog,
   DialogContent,
   IconButton,
@@ -21,6 +22,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from "@components/logo";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -48,11 +50,12 @@ export const Header: React.FC = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
   const [categories, setCategories] = useState<Category[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileMenuAnchor, setMobileMenuAnchor] = useState<null | HTMLElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Post[]>([]);
   const [allPosts, setAllPosts] = useState<Post[]>([]);
-  const { mode, toggleTheme } = useThemeMode();
+  const { mode, toggleTheme, mounted } = useThemeMode();
 
   useEffect(() => {
     const getCategory = async () => {
@@ -122,6 +125,14 @@ export const Header: React.FC = () => {
     setAnchorEl(null);
   };
 
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMobileMenuAnchor(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMenuAnchor(null);
+  };
+
   return (
     <AppBar
       position="static"
@@ -129,7 +140,8 @@ export const Header: React.FC = () => {
       elevation={0}
       sx={{ bgcolor: "background.paper" }}
     >
-      <Toolbar sx={{ justifyContent: "space-between", py: 2 }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 } }}>
+        <Toolbar sx={{ justifyContent: "space-between", py: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Logo hasImage />
         </Box>
@@ -162,29 +174,41 @@ export const Header: React.FC = () => {
             </IconButton>
           )}
 
-          <Button
-            onClick={handleCategoryClick}
-            endIcon={<KeyboardArrowDownIcon />}
-            sx={{ color: "text.primary" }}
-          >
-            Categories
-          </Button>
+          {!isMobile && (
+            <>
+              <Button
+                onClick={handleCategoryClick}
+                endIcon={<KeyboardArrowDownIcon />}
+                sx={{ color: "text.primary" }}
+              >
+                Categories
+              </Button>
 
-          <Link href="/about" legacyBehavior>
-            <MuiLink
-              underline="none"
-              sx={{
-                color: "text.secondary",
-                "&:hover": { color: "text.primary" },
-              }}
-            >
-              About
-            </MuiLink>
-          </Link>
+              <Link href="/about" legacyBehavior>
+                <MuiLink
+                  underline="none"
+                  sx={{
+                    color: "text.secondary",
+                    "&:hover": { color: "text.primary" },
+                  }}
+                >
+                  About
+                </MuiLink>
+              </Link>
+            </>
+          )}
 
-          <IconButton onClick={toggleTheme} aria-label="Toggle dark mode" sx={{ color: "text.primary" }}>
-            {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
-          </IconButton>
+          {isMobile && (
+            <IconButton onClick={handleMobileMenuOpen} aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+          )}
+
+          {mounted && (
+            <IconButton onClick={toggleTheme} aria-label="Toggle dark mode" sx={{ color: "text.primary" }}>
+              {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+          )}
         </Box>
       </Toolbar>
 
@@ -214,6 +238,36 @@ export const Header: React.FC = () => {
             </Link>
           </MenuItem>
         ))}
+      </Menu>
+
+      <Menu
+        anchorEl={mobileMenuAnchor}
+        open={Boolean(mobileMenuAnchor)}
+        onClose={handleMobileMenuClose}
+        MenuListProps={{
+          "aria-labelledby": "mobile-menu-button",
+        }}
+      >
+        <MenuItem onClick={handleMobileMenuClose}>
+          <Link href="/" style={{ textDecoration: "none", color: "inherit", width: "100%" }}>
+            Home
+          </Link>
+        </MenuItem>
+        {categories.map((category) => (
+          <MenuItem key={category.name} onClick={handleMobileMenuClose}>
+            <Link
+              href={`/categories/${category.name.toLowerCase()}`}
+              style={{ textDecoration: "none", color: "inherit", width: "100%" }}
+            >
+              {category.name}
+            </Link>
+          </MenuItem>
+        ))}
+        <MenuItem onClick={handleMobileMenuClose}>
+          <Link href="/about" style={{ textDecoration: "none", color: "inherit", width: "100%" }}>
+            About
+          </Link>
+        </MenuItem>
       </Menu>
 
       <Dialog
@@ -278,6 +332,7 @@ export const Header: React.FC = () => {
           ) : null}
         </DialogContent>
       </Dialog>
+      </Container>
     </AppBar>
   );
 };

@@ -12,14 +12,16 @@ export const BasicLayout: React.FC<BasicLayoutProps> = ({
   maxWidth = "lg" 
 }) => {
   return (
-    <Container maxWidth={maxWidth} sx={{ width: "100%", px: { xs: 2, sm: 3 } }}>
-      <div className="">
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <div className="mb-auto">{children}</div>
-          <Footer />
+    <>
+      <Header />
+      <Container maxWidth={maxWidth} sx={{ width: "100%", px: { xs: 2, sm: 3 } }}>
+        <div className="">
+          <div className="flex min-h-screen flex-col">
+            <div className="mb-auto">{children}</div>
+            <Footer />
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 };

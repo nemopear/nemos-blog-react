@@ -18,32 +18,44 @@ export const ThemeContext = createContext<ThemeContextType>({
 
 export const useThemeMode = () => useContext(ThemeContext);
 
+const getInitialTheme = (): ThemeMode => {
+  if (typeof window === "undefined") return "light";
+  
+  const stored = localStorage.getItem("theme-mode") as ThemeMode | null;
+  if (stored === "light" || stored === "dark") {
+    return stored;
+  }
+  
+  const dataTheme = document.documentElement.getAttribute("data-theme");
+  if (dataTheme === "dark") return "dark";
+  
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    return "dark";
+  }
+  
+  return "light";
+};
+
 export function ThemeContextProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    
-    // Check localStorage first, then system preference
-    const stored = localStorage.getItem("theme-mode") as ThemeMode | null;
-    if (stored === "light" || stored === "dark") {
-      setMode(stored);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setMode("dark");
-    }
+    setMode(getInitialTheme());
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
     
-    // Apply theme to document
     const root = document.documentElement;
     
     if (mode === "dark") {
       root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
     } else {
       root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
     }
     
     localStorage.setItem("theme-mode", mode);

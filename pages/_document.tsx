@@ -15,6 +15,9 @@ class CustomDocument extends Document {
                     var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                     if (theme === 'dark' || (!theme && prefersDark)) {
                       document.documentElement.classList.add('dark');
+                      document.documentElement.setAttribute('data-theme', 'dark');
+                    } else {
+                      document.documentElement.setAttribute('data-theme', 'light');
                     }
                   } catch (e) {}
                 })();
@@ -23,7 +26,7 @@ class CustomDocument extends Document {
           />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
           <link
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;200;300;400;500;600;700&display=swap"
             rel="stylesheet"
